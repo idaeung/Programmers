@@ -34,15 +34,27 @@ n	lost	reserve	return
 """
 
 def solution(n, lost, reserve):
-    for clothes in lost:
-        if clothes+1 in reserve or clothes-1 in reserve:
-            lost.remove(clothes)
-        print("lost: ", lost)
+    lost.sort()
+    reserve.sort()
 
+    for i, spare in enumerate(reserve):
+        num = 0
+        if lost:
+            if spare in lost[i:3]:
+                num = 0
+            elif spare + 1 in lost[i:3]:
+                num = 1
+            elif spare - 1 in lost[i:3]:
+                num = -1
+            lost.remove(spare+num)
+            print("after lost: ", lost)
+        else:
+            break
     return n - len(lost)
 
-# print("solution: ", solution(5, [2, 4], [1, 3, 5]))
-# print("solution: ", solution(5, [2, 4], [3]))
-# print("solution: ", solution(3, [3], [1]))
-
-print([1, 2].index(3))
+print("solution: ", solution(5, [2, 4], [1, 3, 5]))
+print("solution: ", solution(5, [2, 4], [3]))
+print("solution: ", solution(3, [3], [1]))
+# print("solution: ", solution(20, [1], [1]))
+# print("solution: ", solution(20, [1, 5, 10, 15, 20, 25, 30], [3, 6, 9, 12, 15, 18, 20, 21, 25]))
+# print("solution: ", solution(30, [i for i in range(1, 31)], [1]))

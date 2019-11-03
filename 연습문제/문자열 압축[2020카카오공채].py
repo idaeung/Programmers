@@ -53,18 +53,24 @@ s	result
 """
 
 def solution(s):
-    answer = ""
-    # for i in range(len(s)):
-    i=1
-    slice_range = 1
-    for j in range(len(s)//i - 1):
-        # print("s[j]= {0}, s[j+1]= {1}".format(s[j], s[j+1]))
-        if s[j] == s[j+1]:
-            slice_range += 1
-        else:
-            answer += str(slice_range)+s[j] if slice_range != 1 else s[j]
-            slice_range = 1
-    answer += str(slice_range)+s[j] if slice_range != 1 else s[j]
-    print(answer)
-    return
+    min_len = 1000
+    for i in range(1, len(s)+1):
+        answer = ""
+        cnt = 1
+        for j in range(0, len(s), i):
+            if s[j: j+i] == s[j+i: j+i*2]:
+                cnt += 1
+            else:
+                answer += str(cnt)+s[j:j+i] if cnt != 1 else s[j:j+i]
+                cnt = 1
+        # print(answer)
+
+        if min_len > len(answer):
+            min_len = len(answer)
+    return min_len
+
 print(solution("aabbaccc"))
+print(solution("ababcdcdababcdcd"))
+print(solution("abcabcdede"))
+print(solution("abcabcabcabcdededededede"))
+print(solution("xababcdcdababcdcd"))

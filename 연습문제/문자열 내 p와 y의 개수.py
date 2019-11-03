@@ -23,13 +23,15 @@ Pyy	false
 'p'의 개수 1개, 'y'의 개수 2개로 다르므로 false를 return 합니다.
 """
 
-
+from collections import Counter
 def solution(s):
     lower_s = s.lower()
     return True if lower_s.count("p") == lower_s.count("y") else False
 
     # code refactoring
     # return lower_s.count("p") == lower_s.count("y")
+    # c = Counter(s.lower())
+    # return c["y"] == c["p"]
 
 print(solution("pPoooyY"))
 print(solution("Pyy"))

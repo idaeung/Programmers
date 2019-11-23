@@ -18,18 +18,27 @@ arr	answer
 """
 
 def solution(arr):
-    answer = []
-    for i in range(1, len(arr)):
-        if arr[i-1] != arr[i]:
-            if not answer:
-                answer.append(arr[i-1])
-                answer.append(arr[i])
-            else:
-                answer.append(arr[i])
-    if not answer:
-        return list(set(arr))
-
-    return answer
+    # answer = []
+    # for i in range(1, len(arr)):
+    #     if arr[i-1] != arr[i]:
+    #         if not answer:
+    #             answer.append(arr[i-1])
+    #             answer.append(arr[i])
+    #         else:
+    #             answer.append(arr[i])
+    # if not answer:
+    #     return list(set(arr))
+    #
+    # return answer
+    a = []
+    for i in arr:
+        if i in a[:]:
+        # if a[-1:] == [i]:
+            # print("a[-1:] = ", a[-1:])
+            # print(a[:] == [i])
+            continue
+        a.append(i)
+    return a
 
 print(solution([1, 1, 3, 3]))
 print(solution([1, 1, 3, 3, 0, 1, 1]))

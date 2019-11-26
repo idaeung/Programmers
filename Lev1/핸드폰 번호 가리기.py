@@ -13,8 +13,20 @@ phone_number	return
 027778888	*****8888
 """
 def solution(phone_number):
+    # 0:00:00.096431
     return "*" * len(phone_number[:-4]) + phone_number[-4:]
 
-print(solution("01033334444"))
-print(solution("027778888"))
-print(solution("1234"))
+    # code refactoring
+    # 0:00:00.086817
+    # return "*" * (len(phone_number) -4) + phone_number[-4:]
+
+# print(solution("01033334444"))
+# print(solution("027778888"))
+# print(solution("1234"))
+from datetime import datetime
+s = datetime.now()
+for _ in range(100000):
+    solution("1234")
+    solution("12345678901234567")
+    solution("123213123123123")
+print(datetime.now() - s)

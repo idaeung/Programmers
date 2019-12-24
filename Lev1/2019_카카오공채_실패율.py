@@ -61,17 +61,28 @@ def solution(N, stages):
     answer = []
 
     for i in range(N):
+        if stages_len == 0:
+            break
         user = stages.count(i+1)
         failure = user / stages_len
         if failure not in FS:
             FS[failure] = list()
         FS[failure].append(i+1)
         stages_len -= user
-
+    print(FS)
     for key in sorted([*FS], reverse=True):
-        for value in FS[key]:
-            answer.append(value)
+        answer.extend(FS[key])
     return answer
 
-print(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
-print(solution(4, [4,4,4,4,4]))
+
+# print(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
+# print(solution(4, [4,4,4,4,4]))
+print("solution: ", solution(5, [5, 5, 4, 4, 3, 3, 2, 2, 1]))
+
+# from datetime import datetime
+# s = datetime.now()
+# for _ in range(100000):
+#     solution(5, [2, 1, 2, 6, 2, 4, 3, 3])
+#     solution(4, [4, 4, 4, 4, 4])
+# print(datetime.now() - s)
+

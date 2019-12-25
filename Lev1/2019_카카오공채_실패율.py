@@ -55,34 +55,22 @@ N	stages	result
 [4,1,2,3]
 """
 def solution(N, stages):
-    # failure-stages
-    FS = dict()
+    stage_failure = dict()
     stages_len = len(stages)
-    answer = []
 
     for i in range(N):
-        if stages_len == 0:
-            break
         user = stages.count(i+1)
-        failure = user / stages_len
-        if failure not in FS:
-            FS[failure] = list()
-        FS[failure].append(i+1)
+        failure = user / stages_len if user else 0
+        stage_failure[i+1] = failure
         stages_len -= user
-    print(FS)
-    for key in sorted([*FS], reverse=True):
-        answer.extend(FS[key])
-    return answer
 
+    return sorted(stage_failure, key=lambda s: stage_failure[s], reverse=True)
 
-# print(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
-# print(solution(4, [4,4,4,4,4]))
-print("solution: ", solution(5, [5, 5, 4, 4, 3, 3, 2, 2, 1]))
+    # 문제풀이 참고 요소
+    # sorted(OOO, key=lambda key: dict[k], reverse=True)
 
-# from datetime import datetime
-# s = datetime.now()
-# for _ in range(100000):
-#     solution(5, [2, 1, 2, 6, 2, 4, 3, 3])
-#     solution(4, [4, 4, 4, 4, 4])
-# print(datetime.now() - s)
+print(solution(5, [2, 1, 2, 6, 2, 4, 3, 3]))
+print(solution(4, [4,4,4,4,4]))
+# print("solution: ", solution(5, [5, 5, 4, 4, 3, 3, 2, 2, 1]))
+
 

@@ -49,6 +49,7 @@ Single(S), Double(D), Triple(T)은 점수마다 하나씩 존재한다.
 7	        1D2S3T*	        59	        12 + 21 * 2 + 33 * 2
 """
 def solution(dartResult):
+    # 0: 00:00.987359
     formula = { "S": 1, "D": 2, "T": 3 }
     results = []
     temp = ""
@@ -61,19 +62,42 @@ def solution(dartResult):
                 results[-1] *= -1
             else:
                 if len(results) > 1:
-                    results[-1] *= 2
                     results[-2] *= 2
-                else:
-                    results[-1] *= 2
+                results[-1] *= 2
         else:
             temp += dart
     return sum(results)
 
-print(solution("1S2D*3T"))  # 37
-print(solution("1D2S#10S")) # 9
-print(solution("1D2S0T"))   # 3
-print(solution("1S*2T*3S")) # 23
-print(solution("1D#2S*3S")) # 5
-print(solution("1T2D3D#"))  # -4
-print(solution("1D2S3T*"))  # 59
+    # code refactoring 참고 요소
+    # 0:00:01.783087
+    # import re
+    # bonus = { 'S': 1, 'D': 2, 'T': 3 }
+    # option = { '': 1, '*': 2, '#': -1 }
+    # p = re.compile('(\d+)([SDT])([*#]?)')
+    # dart = p.findall(dartResult)
+    # for i in range(len(dart)):
+    #     if dart[i][2] == '*' and i > 0:
+    #         dart[i-1] *= 2
+    #     dart[i] = int(dart[i][0]) ** bonus[dart[i][1]] * option[dart[i][2]]
+    # return sum(dart)
+
+# print(solution("1S2D*3T"))  # 37
+# print(solution("1D2S#10S")) # 9
+# print(solution("1D2S0T"))   # 3
+# print(solution("1S*2T*3S")) # 23
+# print(solution("1D#2S*3S")) # 5
+# print(solution("1T2D3D#"))  # -4
+# print(solution("1D2S3T*"))  # 59
+
+from datetime import datetime
+t0 = datetime.now()
+for i in range(50000):
+    solution("1S2D*3T")
+    solution("1D2S#10S")
+    solution("1D2S0T")
+    solution("1S*2T*3S")
+    solution("1D#2S*3S")
+    solution("1T2D3D#")
+    solution("1D2S3T*")
+print(datetime.now() - t0)
 

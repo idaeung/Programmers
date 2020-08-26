@@ -73,7 +73,7 @@ def solution(numbers, hand):
             if keypad[k_idx] in middle_pad:
                 m_k_idx = middle_pad.index(keypad[k_idx])
 
-            if min(abs(m_k_idx-m_pre_l), abs(k_idx-m_pre_l)) < min(abs(m_k_idx-m_pre_r), abs(=)):
+            if min(abs(m_k_idx-m_pre_l), abs(k_idx-m_pre_l)) < min(abs(m_k_idx-m_pre_r), abs(k_idx-m_pre_r)):
                 answer += 'L'
                 pre_l = k_idx
             elif abs(m_k_idx-m_pre_l) > abs(m_k_idx-m_pre_r):

@@ -51,86 +51,45 @@ numbers	                            hand	    result
 입출력 예 #3
 오른손잡이가 [1, 2, 3, 4, 5, 6, 7, 8, 9, 0]를 순서대로 누르면 사용한 손은 "LLRLLRLLRL"이 됩니다.
 '''
+import numpy as np
+
 def solution(numbers, hand):
-    keypad = [1, 2, 3, 4, 5, 6, 7, 8, 9, '*', 0, '#']
-    middle_pad = [2, 5, 8, 0]
+    keypad = [[1, 2, 3], [4, 5, 6], [7, 8, 9], ['*', 0, '#']]
     l = [1, 4, 7]
     r = [3, 6, 9]
-    pre_l = keypad.index('*')
-    pre_r = keypad.index('#')
+    n_dict = {row: (i, j) for i, rows in enumerate(keypad) for j, row in enumerate(rows)}
+    cur_l = n_dict['*']
+    cur_r = n_dict['#']
+
     answer = ''
     for n in numbers:
-        k_idx = keypad.index(n)
+        k_idx = n_dict[n]
         if n in l:
             answer += 'L'
-            pre_l = k_idx
+            cur_l = k_idx
         elif n in r:
             answer += 'R'
-            pre_r = k_idx
+            cur_r = k_idx
         else:
-            m_pre_l, l_flag = [middle_pad.index(keypad[pre_l]), True] if keypad[pre_l] in middle_pad else [pre_l, False]
-            m_pre_r, r_flag = [middle_pad.index(keypad[pre_r]), True] if keypad[pre_r] in middle_pad else [pre_r, False]
-            if keypad[k_idx] in middle_pad:
-                m_k_idx = middle_pad.index(keypad[k_idx])
-
-            if m_k_idx != k_idx and not l_flag and not r_flag:
-                if abs(k_idx - pre_l) < abs(k_idx - pre_r):
-                    answer += 'L'
-                    pre_l = k_idx
-                elif abs(k_idx - pre_l) > abs(k_idx - pre_r):
-                    answer += 'R'
-                    pre_r = k_idx
-                else:
-                    if hand == 'right':
-                        answer += 'R'
-                        pre_r = k_idx
-                    else:
-                        answer += 'L'
-                        pre_l = k_idx
+            l_dist = sum(abs(np.subtract(n_dict[n], cur_l)))
+            r_dist = sum(abs(np.subtract(n_dict[n], cur_r)))
+            if l_dist < r_dist:
+                answer += 'L'
+                cur_l = k_idx
+            elif l_dist > r_dist:
+                answer += 'R'
+                cur_r = k_idx
             else:
-                if not l_flag:
-                    if abs(k_idx - m_pre_l) < min(abs(m_k_idx - m_pre_r), abs(k_idx - pre_r)):
-                        answer += 'L'
-                        pre_l = k_idx
-                    elif abs(k_idx - m_pre_l) > min(abs(m_k_idx - m_pre_r), abs(k_idx - m_pre_r)):
-                        answer += 'R'
-                        pre_r = k_idx
-                    else:
-                        if hand == 'right':
-                            answer += 'R'
-                            pre_r = k_idx
-                        else:
-                            answer += 'L'
-                            pre_l = k_idx
-                elif not r_flag:
-                    if min(abs(m_k_idx - m_pre_l), abs(k_idx - m_pre_l)) < abs(k_idx - pre_r):
-                        answer += 'L'
-                        pre_l = k_idx
-                    elif min(abs(m_k_idx - m_pre_l), abs(k_idx - m_pre_l)) > abs(k_idx - m_pre_r):
-                        answer += 'R'
-                        pre_r = k_idx
-                    else:
-                        if hand == 'right':
-                            answer += 'R'
-                            pre_r = k_idx
-                        else:
-                            answer += 'L'
-                            pre_l = k_idx
+                if hand == 'right':
+                    answer += 'R'
+                    cur_r = k_idx
                 else:
-                    if min(abs(m_k_idx - m_pre_l), abs(k_idx - m_pre_l)) < min(abs(m_k_idx - m_pre_r), abs(k_idx - pre_r)):
-                        answer += 'L'
-                        pre_l = k_idx
-                    elif min(abs(m_k_idx - m_pre_l), abs(k_idx - m_pre_l)) > min(abs(m_k_idx - m_pre_r), abs(k_idx - m_pre_r)):
-                        answer += 'R'
-                        pre_r = k_idx
-                    else:
-                        if hand == 'right':
-                            answer += 'R'
-                            pre_r = k_idx
-                        else:
-                            answer += 'L'
-                            pre_l = k_idx
+                    answer += 'L'
+                    cur_l = k_idx
     return answer
 
 print(solution([1, 3, 4, 5, 8, 2, 1, 4, 5, 9, 5], "right"))
 print(solution([7, 0, 8, 2, 8, 3, 1, 5, 7, 6, 2], "left"))
+print(solution([1, 2, 3, 4, 5, 6, 7, 8, 9, 0], 'right'))
+
+
